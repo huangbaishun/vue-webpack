@@ -23,10 +23,6 @@ module.exports = {
         loader: 'vue-loader'
       },
       {
-        test: /\.js$/,
-        loader: 'babel-loader'
-      },
-      {
         test: /\.css$/,
         // style-loader和MiniCssExtractPlugin.loader互斥
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']

@@ -3,11 +3,25 @@ const { merge } = require('webpack-merge')
 const baseConfig = require('./webpack.base.js')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
 
 const ProConfig = merge(baseConfig, {
   mode: 'production',
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: 'thread-loader',
+            options: {
+              workers: 3
+            }
+          },
+          'babel-loader'
+        ]
+      },
       { 
         test: /\.(png|jpg|gif|jpeg|svg)$/,
         use: {
@@ -37,7 +51,8 @@ const ProConfig = merge(baseConfig, {
     new optimizeCssAssetsWebpackPlugin({
       assetNameRegExp: /\.css$/g,
       cssProcessor: require('cssnano')
-    })
+    }),
+    // new BundleAnalyzerPlugin()
   ],
   optimization: {
     splitChunks: {
@@ -72,8 +87,12 @@ const ProConfig = merge(baseConfig, {
           reuseExistingChunk: true 
         }
       }
-    }
+    },
+    minimizer: [
+      new TerserWebpackPlugin({
+        parallel: true
+      })
+    ]
   }
 })
-
 module.exports =  ProConfig

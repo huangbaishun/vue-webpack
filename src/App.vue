@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      title: 'app实例'
+      title: 'app实例b'
     }
   },
   methods: {

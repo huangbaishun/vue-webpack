@@ -13,6 +13,12 @@ const webpackDevConfig = {
   ],
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: [
+          'babel-loader'
+        ]
+      },
       { 
         test: /\.(png|jpg|gif|jpeg|svg)$/,
         use: {
